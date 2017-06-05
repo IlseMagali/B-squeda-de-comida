@@ -1,6 +1,8 @@
-window.addEventListener("load", cargarPagina);
-
+// window.addEventListener("load", cargarPagina);
 function cargarPagina() {
+
+  $("#buscar").submit(filtrarRestaurante);
+
   var verificarCoords = function (e) {
   	if (navigator.geolocation) {
   		navigator.geolocation.getCurrentPosition(obtenerCoordenadas);
@@ -10,6 +12,7 @@ function cargarPagina() {
   };
   verificarCoords();
 }
+
 // Geolocalizándome
 function obtenerCoordenadas(posicion) {
   var coordenadas = {
@@ -62,3 +65,38 @@ var restaurantes = [
     comida: "mediterránea"
   },
 ];
+
+  var plantillaRestaurante = '<div class="row">' +
+    '<div class="col s12">' +
+      '<div class="card-panel hoverable grey lighten-5 z-depth-1">' +
+        '<h5 class="name">__nombre__</h5>' +
+        '<p class="black-text">__comida__</p>' +
+        '<p class="black-text">__direccion__</p>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+
+
+var filtrarRestaurante = function (e) {
+  e.preventDefault();
+  var criterioBusqueda = $("#search").val().toLowerCase();
+	var restaurantesFiltrados = restaurantes.filter(function (restaurante) {
+	   return restaurante.nombre.toLowerCase().indexOf(criterioBusqueda) >= 0;
+	});
+  console.log(restaurantesFiltrados);
+	 mostrarRestaurantes(restaurantesFiltrados);
+}
+
+var mostrarRestaurantes = function (restaurantes) {
+  console.log(restaurantes);
+	var plantillaRestauranteFinal = "";
+	restaurantes.forEach(function (restaurante) {
+		plantillaRestauranteFinal += plantillaRestaurante.replace("__nombre__", restaurante.nombre)
+		.replace("__comida__", restaurante.comida)
+		.replace("__direccion__", restaurante.direccion);
+	});
+
+	$(".restaurante").html(plantillaRestauranteFinal);
+};
+
+$(document).ready(cargarPagina);
