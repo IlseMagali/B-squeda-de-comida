@@ -2,6 +2,7 @@
 function cargarPagina() {
 
   $("#buscar").submit(filtrarRestaurante);
+  $(".card-panel").click(mostrarMapaComida);
 
   var verificarCoords = function (e) {
   	if (navigator.geolocation) {
@@ -66,8 +67,8 @@ var restaurantes = [
   },
 ];
 
-  var plantillaRestaurante = '<div class="row">' +
-    '<div class="col s12">' +
+var plantillaRestaurante = '<div class="row">' +
+  '<div class="col s12">' +
       '<div class="card-panel hoverable grey lighten-5 z-depth-1">' +
         '<h5 class="name">__nombre__</h5>' +
         '<p class="black-text">__comida__</p>' +
@@ -75,7 +76,6 @@ var restaurantes = [
       '</div>' +
     '</div>' +
   '</div>';
-
 
 var filtrarRestaurante = function (e) {
   e.preventDefault();
@@ -89,14 +89,18 @@ var filtrarRestaurante = function (e) {
 
 var mostrarRestaurantes = function (restaurantes) {
   console.log(restaurantes);
-	var plantillaRestauranteFinal = "";
-	restaurantes.forEach(function (restaurante) {
-		plantillaRestauranteFinal += plantillaRestaurante.replace("__nombre__", restaurante.nombre)
-		.replace("__comida__", restaurante.comida)
-		.replace("__direccion__", restaurante.direccion);
-	});
+  var plantillaRestauranteFinal = "";
+  restaurantes.forEach(function (restaurante) {
+    plantillaRestauranteFinal += plantillaRestaurante.replace("__nombre__", restaurante.nombre)
+    .replace("__comida__", restaurante.comida)
+    .replace("__direccion__", restaurante.direccion);
+  });
 
-	$(".restaurante").html(plantillaRestauranteFinal);
+  $(".restaurante").html(plantillaRestauranteFinal);
 };
+
+var mostrarMapaComida = function (restaurante) {
+  console.log(restaurantes[0].latitud);
+}
 
 $(document).ready(cargarPagina);
