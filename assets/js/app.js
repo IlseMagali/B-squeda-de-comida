@@ -103,7 +103,7 @@ var mostrarRestaurantes = function (restaurantes) {
   // muestra la plantilla para cada restaurante al cargar la página
   $(".restaurante").html(plantillaRestauranteFinal);
   // al realizar el filtro también envía al mapa correspondiente
-  $(".card-panel").click(mostrarMapaComida);
+  $(".card-panel").on("click", mostrarMapaComida);
 };
 
 // Mostrar mapa del restaurante seleccionado
@@ -115,7 +115,7 @@ function mostrarMapaComida() {
     lat: latitud,
     lng: longitud
   };
-  // llama a la función que muestra la localización del restaurante y que ha localizado las coordenadas para generar el mapa correspondiente
+  // llama a la función que muestra la localización del y que ha localizado las coordenadas para generar el mapa correspondiente
   initMap(coordenadas);
 }
 
